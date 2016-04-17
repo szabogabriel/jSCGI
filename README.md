@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-# jSCGI
-Implementation of the SCGI protocol
-=======
-JSCGI
+jSCGI
 =====
 
 This project is an implementation of the SCGI protocol.
@@ -41,16 +37,18 @@ class that always returns a new JSCGIRequestHandler instance.
 An example of this implementation can be found in the Main
 class.
 
-> new JSCGIRequestHandlerFactory(){
-> 	@Override
-> 	public JSCGIRequestHandler createHandler() {
-> 		return new JSCGIRequestHandler(){
-> 			@Override
-> 			public void handle(JSCGIRequest request) {
-> 				request.sendData("Status: 200 OK\nContent-type: text/plain\nContent-length: 13\n\nHello, world!");
-> 				request.finish();
-> 			}
-> 		};
-> 	}
-> })
->>>>>>> Initial commit
+```java
+new JSCGIRequestHandlerFactory(){
+	@Override
+	public JSCGIRequestHandler createHandler() {
+		return new JSCGIRequestHandler(){
+  		@Override
+			public void handle(JSCGIRequest request) {
+				request.sendData("Status: 200 OK\nContent-type: text/plain\nContent-length: 13\n\nHello, world!");
+				request.finish();
+			}
+		};
+	}
+})
+```
+
