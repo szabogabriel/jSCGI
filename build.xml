@@ -1,0 +1,33 @@
+<project name="jSCGI" basedir="." default="all">
+	
+	<property name="file.jar" value="jSCGI.jar"/>
+	<property name="dir.src" value="src"/>
+	<property name="dir.bin" value="bin"/>
+	
+	<target name="all">
+		<antcall target="clean"/>
+		<antcall target="init"/>
+		<antcall target="build"/>
+		<antcall target="package"/>
+	</target>
+	
+	<target name="clean">
+		<delete file="${file.jar}" quiet="true"/>
+		<available file="${dir.bin}" type="dir" property="bin.exists" value="x"/>
+	</target>
+	
+	<target name="init" unless="bin.exists">
+		<mkdir dir="${dir.bin}"/>
+	</target>
+	
+	<target name="build">
+		<javac srcdir="${dir.src}" destdir="${dir.bin}"/>
+	</target>
+	
+	<target name="package">
+		<jar destfile="${file.jar}">
+			<fileset dir="${dir.bin}"/>
+		</jar>
+	</target>
+	
+</project>
