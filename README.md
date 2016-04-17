@@ -1,4 +1,4 @@
-JSCGI
+jSCGI
 =====
 
 This project is an implementation of the SCGI protocol.
