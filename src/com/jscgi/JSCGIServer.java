@@ -3,13 +3,10 @@ package com.jscgi;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class JSCGIServer implements Runnable {
 	
 	private final int PORT;
-	private final ExecutorService THREAD_POOL;
 	private final ServerSocket SERVER_SOCKET;
 	private final String HOST;
 	private final JSCGIRequestHandlerFactory REQUEST_HANDLER_FACTORY;
@@ -17,7 +14,6 @@ public class JSCGIServer implements Runnable {
 	public JSCGIServer(int port, JSCGIRequestHandlerFactory handlerFactory) throws IOException {
 		this.PORT = port;
 		this.HOST = "";
-		this.THREAD_POOL = Executors.newCachedThreadPool();
 		this.SERVER_SOCKET = new ServerSocket(this.PORT);
 		this.REQUEST_HANDLER_FACTORY = handlerFactory;
 	}
@@ -25,7 +21,6 @@ public class JSCGIServer implements Runnable {
 	public JSCGIServer(String host, int port, JSCGIRequestHandlerFactory handlerFactory) throws IOException {
 		this.PORT = port;
 		this.HOST = host;
-		this.THREAD_POOL = Executors.newCachedThreadPool();
 		this.SERVER_SOCKET = new ServerSocket(this.PORT, 0, InetAddress.getByName(this.HOST));
 		this.REQUEST_HANDLER_FACTORY = handlerFactory;
 	}
@@ -34,7 +29,8 @@ public class JSCGIServer implements Runnable {
 	public void run() {
 		while(true) {
 			try {
-				this.THREAD_POOL.execute(new JSCGISocketHandler(this.SERVER_SOCKET.accept(), REQUEST_HANDLER_FACTORY.createHandler()));
+//				this.THREAD_POOL.execute(new JSCGISocketHandler(this.SERVER_SOCKET.accept(), REQUEST_HANDLER_FACTORY.createHandler()));
+				REQUEST_HANDLER_FACTORY.register(new JSCGISocketHandler(this.SERVER_SOCKET.accept(), REQUEST_HANDLER_FACTORY.createHandler()));
 			} catch (Exception e) {
 			}
 		}

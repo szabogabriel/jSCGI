@@ -6,21 +6,10 @@ public class Main {
 	
 	public static void main(String [] args) {
 		try {
-			new Thread(new JSCGIServer(9009, new JSCGIRequestHandlerFactory(){
-				@Override
-				public JSCGIRequestHandler createHandler() {
-					return new JSCGIRequestHandler(){
-						@Override
-						public void handle(JSCGIRequest request) {
-							request.sendData("Status: 200 OK\nContent-type: text/plain\nContent-length: 13\n\nHello, world!");
-							request.finish();
-						}
-					};
-				}
-			})).start();
+			new Thread(new JSCGIServer(9876, new HandlerFactory())).start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
+	
 }

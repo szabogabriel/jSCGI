@@ -27,6 +27,8 @@ public class JSCGISocketHandler implements JSCGIRequest, Runnable {
 		this.IN = socket.getInputStream();
 		this.OUT = socket.getOutputStream();
 		this.HANDLER = handler;
+		this.SOCKET.setKeepAlive(true);
+		this.SOCKET.setTcpNoDelay(true);
 	}
 
 	@Override
