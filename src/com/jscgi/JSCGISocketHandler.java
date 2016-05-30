@@ -61,7 +61,7 @@ public class JSCGISocketHandler implements JSCGIRequest, Runnable {
 			key = read(i);
 			i += key.length() + 1;
 			value = read(i);
-			i += value.length() + 1;
+			i += value.length();
 			PARAMS.put(key, value);
 		}
 	}
