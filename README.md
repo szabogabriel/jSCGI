@@ -6,35 +6,15 @@ This project is an implementation of the SCGI protocol.
 Description
 -----------
 
-It uses Java ServerSocket to handle incoming requests
-and the java CachedThreadPool executor to handle them.
-The main entry point is the JSCGIServer class. It requires
-an integer as the listen port and a JSCGIRequestHandlerFactory,
-which should produce a JSCGIRequestHandler implementation.
+It uses Java ServerSocket to handle incoming requests and the java CachedThreadPool executor to handle them. The main entry point is the `JSCGIServer` class. It requires an integer as the listen port and a `CGIRequestHandler` interface, which should be able to handle all expected SCGI requests.
 
-The JSCGIRequestHandler interface defines a single method to
-handle requests represented by the JSCGIRequest interface.
+The `SCGIRequestHandler` is a functional interface. It accepts an `SCGIMessage` instance and an OutputStream, into which the created response should be written.
 
-The JSCGIRequest is implemented by the JSCGISocketHandler class
-in this project. The readData methods should be used to read
-additional data beside the SCGI headers (typically body of a POST
-request). It can be read into memory or into a file. There
-is no additional logic performed when reading the body of the
-request.
+The `SCGIMessage` is used to pass requests around. It is responsible for parsing the SCGI message from an InputStream, but it is also capable of serializing the object to an OutputStream. It holds the implementation for the SCGI protocol.
 
-When returning data, the sendData method should be used. It
-can be invoked several times and the String and byte array
-attribute versions are interchangeable. When the transfer is
-finished, the finish method must be called to flush and close
-the connection.
+There is also an `SCGIClient` available which should be used to send requests to the `SCGIServer`. It offers several variants, how to handle the response data. It accepts either an OutputStream or can return a byte array or an `SCGIMessage` instance. Returning the `SCGIMessage` instance isn't in line with the SCGI protocol, which should return the HTTP response directly. However, using the `SCGIMessage` for bidirectional communication it offers a better application logic separation thus be available for custom protocol implementations as well.
 
 Example
 -------
 
-The simplest example consists of a JSCGIRequestHandlerFactory
-class that always returns a new JSCGIRequestHandler instance.
-
-An example of this implementation can be found in the test
-part of the code.
-
-
+A basic example is available in the `scgi.MainFlowTest`.
