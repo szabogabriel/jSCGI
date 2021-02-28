@@ -21,15 +21,15 @@ The server can be created by passing the listen port and an `SCGIRequestHandler`
 
 ```
 new SCGIServer(port, (req, res) -> {
-				if (req.isBodyAvailable()) {
-					String name = new String(req.getBody());
-					try {
-						res.write(("Hello, " + name).getBytes());
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-		});
+  if (req.isBodyAvailable()) {
+    String name = new String(req.getBody());
+    try {
+      res.write(("Hello, " + name).getBytes());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+});
  ```
  
  Running the client
