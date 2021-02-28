@@ -42,7 +42,3 @@ new SCGIServer(port, (req, res) -> {
  String response = new String(client.sendAndReceiveAsByteArray(new SCGIMessage(new HashMap<>(), "World!".getBytes()))); // Should return "Hello, World!"
  ```
 
-Example
--------
-
-A basic example is available in the `scgi.MainFlowTest`.
