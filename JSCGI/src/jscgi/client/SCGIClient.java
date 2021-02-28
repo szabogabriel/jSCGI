@@ -12,13 +12,21 @@ import jscgi.SCGIMessage;
 
 public class SCGIClient {
 	
+	private String host;
+	private int port;
+	
 	private Socket socket;
 	
 	private InputStream socketIn;
 	private OutputStream socketOut;
 	private byte[] buffer = new byte[2048];
 	
-	public SCGIClient(String host, int port) throws UnknownHostException, IOException {
+	public SCGIClient(String host, int port) {
+		this.host = host;
+		this.port = port;
+	}
+	
+	private void setup() throws UnknownHostException, IOException {
 		socket = new Socket(host, port);
 		
 		socketIn = socket.getInputStream();
@@ -30,13 +38,15 @@ public class SCGIClient {
 		return new SCGIMessage(bin);
 	}
 
-	public byte[] sendAndReceiveAsByteArray(SCGIMessage request) {
+	public byte[] sendAndReceiveAsByteArray(SCGIMessage request) throws UnknownHostException, IOException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		sendRequest(request, out);
 		return out.toByteArray();
 	}
 	
-	public void sendRequest(SCGIMessage request, OutputStream response) {
+	public void sendRequest(SCGIMessage request, OutputStream response) throws UnknownHostException, IOException {
+		setup();
+		
 		try {
 			request.serialize(socketOut);
 			
