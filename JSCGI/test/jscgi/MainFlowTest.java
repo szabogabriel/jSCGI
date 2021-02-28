@@ -4,14 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
 import jscgi.client.SCGIClient;
-import jscgi.server.SCGIRequestHandler;
 import jscgi.server.SCGIServer;
 
 public class MainFlowTest {
