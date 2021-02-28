@@ -20,27 +20,19 @@ public class MainFlowTest {
 	
 	@Test
 	void testMainFlow() throws IOException {
-		SCGIServer server = new SCGIServer(port, new SCGIRequestHandler() {
-			@Override
-			public void handle(SCGIMessage request, OutputStream response) {
-				if (request.isBodyAvailable()) {
-					String name = new String(request.getBody());
+		SCGIServer server = new SCGIServer(port, (req, res) -> {
+				if (req.isBodyAvailable()) {
+					String name = new String(req.getBody());
 					try {
-						response.write(("hello, " + name).getBytes());
+						res.write(("hello, " + name).getBytes());
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
-			}
 		});
 		
 		SCGIClient client = new SCGIClient("localhost", port);
-		
-		Map<String, String> header = new HashMap<>();
-		String content = "world";
-		header.put("CONTENT_LENGTH", content.length() + "");
-		
-		String res = new String(client.sendAndReceiveAsByteArray(new SCGIMessage(header, content.getBytes())));
+		String res = new String(client.sendAndReceiveAsByteArray(new SCGIMessage(new HashMap<>(), "world".getBytes())));
 		
 		assertNotNull(res);
 		assertEquals("hello, world", res);
