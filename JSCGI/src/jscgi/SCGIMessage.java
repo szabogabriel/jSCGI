@@ -1,5 +1,6 @@
 package jscgi;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -64,15 +65,15 @@ public class SCGIMessage {
 	
 	public void setHeaders(Map<String, String> headers) {
 		this.headers = headers;
-		if (body != null) {
-			headers.put(CONTENT_LENGTH, "" + body.length);
-		}
+//		if (body != null) {
+//			headers.put(CONTENT_LENGTH, "" + body.length);
+//		}
 	}
 	
 	public void setBody(byte[] body) {
 		if (body != null) {
 			this.body = body;
-			headers.put(CONTENT_LENGTH, "" + body.length);
+//			headers.put(CONTENT_LENGTH, "" + body.length);
 		}
 	}
 	
@@ -85,6 +86,7 @@ public class SCGIMessage {
 	}
 	
 	public void serialize(OutputStream out) throws IOException {
+		headers.put(CONTENT_LENGTH, "" + body.length);
 		byte[] headerData = SCGIUtil.createHeaders(headers);
 		byte[] length = Integer.toString(headerData.length).getBytes();
 		

@@ -1,4 +1,4 @@
-package jscgi;
+package jscgi.demo;
 
 import java.io.IOException;
 
@@ -8,7 +8,7 @@ public class EchoServer {
 	
 	public static void main(String [] args) {
 		try {
-			new SCGIServer(65000, (req, res) -> {
+			new SCGIServer(65000, (req, res, mode) -> {
 					if (req.isBodyAvailable()) {
 						String name = new String(req.getBody());
 						try {

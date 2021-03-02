@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import jscgi.client.SCGIClient;
 import jscgi.server.SCGIServer;
 
-public class MainFlowTest {
+public class MainFlowModeScgiTest {
 	
 	int port = 65000;
 	
@@ -21,23 +21,25 @@ public class MainFlowTest {
 				if (req.isBodyAvailable()) {
 					String name = new String(req.getBody());
 					try {
-						res.write(("hello, " + name).getBytes());
+						SCGIMessage ret = new SCGIMessage();
+						ret.setBody(("hello, " + name).getBytes());
+						ret.serialize(res);
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
-		});
+		}, Mode.SCGI_MESSAGE_BASED);
 		
-		SCGIClient client = new SCGIClient("localhost", port);
-		String res = new String(client.sendAndReceiveAsByteArray(new SCGIMessage(new HashMap<>(), "world".getBytes())));
+		SCGIClient client = new SCGIClient("localhost", port, Mode.SCGI_MESSAGE_BASED);
+		SCGIMessage res = client.sendAndReceiveAsScgiMessage(new SCGIMessage(new HashMap<>(), "world".getBytes()));
 		
 		assertNotNull(res);
-		assertEquals("hello, world", res);
+		assertEquals("hello, world", new String(res.getBody()));
 		
 		long start = System.currentTimeMillis();
 		for (int i = 0; i < 10000; i++) {
-			res = new String(client.sendAndReceiveAsByteArray(new SCGIMessage(new HashMap<>(), "world".getBytes())));
-			assertEquals("hello, world", res);
+			res = client.sendAndReceiveAsScgiMessage(new SCGIMessage(new HashMap<>(), "world".getBytes()));
+			assertEquals("hello, world", new String(res.getBody()));
 		}
 		long stop = System.currentTimeMillis();
 		

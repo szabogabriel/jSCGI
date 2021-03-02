@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import jscgi.Mode;
 import jscgi.SCGIMessage;
 
 public class SCGIClientHandler implements Runnable {
@@ -15,8 +16,11 @@ public class SCGIClientHandler implements Runnable {
 
 	private InputStream socketIn;
 	private OutputStream socketOut;
+	
+	private Mode mode;
 
-	public SCGIClientHandler(Socket socket, SCGIRequestHandler requestHandler) throws IOException {
+	public SCGIClientHandler(Socket socket, SCGIRequestHandler requestHandler, Mode mode) throws IOException {
+		this.mode = mode;
 		this.socket = socket;
 
 		socketIn = socket.getInputStream();
@@ -27,14 +31,17 @@ public class SCGIClientHandler implements Runnable {
 
 	@Override
 	public void run() {
+		boolean runInLoop = (mode == Mode.SCGI_MESSAGE_BASED);
 		try {
-			SCGIMessage request = new SCGIMessage(socketIn);
-			requestHandler.handle(request, socketOut);
+			do {
+				SCGIMessage request = new SCGIMessage(socketIn);
+				requestHandler.handle(request, socketOut, mode);
+			} while (runInLoop);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				socket.close();
+					socket.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

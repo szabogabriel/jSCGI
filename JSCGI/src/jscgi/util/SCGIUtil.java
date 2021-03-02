@@ -11,6 +11,33 @@ public class SCGIUtil {
 		Map<String, String> ret = new HashMap<>();
 		
 		boolean parsingKey = true;
+		String key = "", value = "";
+		for (int i = 0; i < headers.length; i++) {
+			if (parsingKey) {
+				if (headers[i] != 0) {
+					key += (char)headers[i];
+				} else {
+					parsingKey = false;
+				}
+			} else {
+				if (headers[i] != 0) {
+					value += (char)headers[i];
+				} else {
+					parsingKey = true;
+					ret.put(key, value);
+					key = "";
+					value = "";
+				}
+			}
+		}
+		
+		return ret;
+	}
+	
+	public static Map<String, String> parseHeadersOld(byte[] headers) {
+		Map<String, String> ret = new HashMap<>();
+		
+		boolean parsingKey = true;
 		int from = 0, keyDivider = 0, valDivider = 0, keyLength = 0, valLength = 0;
 		byte[] key = {}, value = {};
 		for (int i = 0; i < headers.length; i++) {

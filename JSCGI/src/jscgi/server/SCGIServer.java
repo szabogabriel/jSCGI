@@ -6,6 +6,8 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import jscgi.Mode;
+
 public class SCGIServer {
 	
 	private ServerSocket ss;
@@ -16,7 +18,14 @@ public class SCGIServer {
 	
 	private Thread t;
 	
+	private Mode mode;
+	
 	public SCGIServer(int port, SCGIRequestHandler requestHandler) throws IOException {
+		this(port, requestHandler, Mode.STANDARD);
+	}
+	
+	public SCGIServer(int port, SCGIRequestHandler requestHandler, Mode mode) throws IOException {
+		this.mode = mode;
 		this.requestHandler = requestHandler;
 		ss = new ServerSocket(port);
 		t = new Thread(this::handleNewConnection);
@@ -27,7 +36,7 @@ public class SCGIServer {
 		while (true) {
 			try {
 				Socket socket = ss.accept();
-				executor.execute(new SCGIClientHandler(socket, requestHandler));
+				executor.execute(new SCGIClientHandler(socket, requestHandler, mode));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
