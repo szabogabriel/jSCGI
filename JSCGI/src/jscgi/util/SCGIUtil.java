@@ -24,6 +24,9 @@ public class SCGIUtil {
 					value += (char)headers[i];
 				} else {
 					parsingKey = true;
+					if (ret.containsKey(key)) {
+						value = ret.get(key) + ", " + value;
+					}
 					ret.put(key, value);
 					key = "";
 					value = "";
