@@ -8,7 +8,7 @@ public class EchoServer {
 	
 	public static void main(String [] args) {
 		try {
-			new SCGIServer(65000, (req, res, mode) -> {
+			new SCGIServer(65001, (req, res, mode) -> {
 					if (req.isBodyAvailable()) {
 						String name = new String(req.getBody());
 						try {

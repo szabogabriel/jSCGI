@@ -13,6 +13,7 @@ public class SCGIMessage {
 	private static final String CONTENT_LENGTH = "CONTENT_LENGTH";
 	
 	private Map<String, String> headers;
+	private int bodyLengthInt = 0;
 	private byte[] body;
 	private InputStream socketIn;
 	
@@ -40,8 +41,7 @@ public class SCGIMessage {
 			
 			String bodyLength = headers.get(CONTENT_LENGTH);
 			if (bodyLength != null && bodyLength.length() > 0) {
-				int bodyLengthInt = Integer.parseInt(bodyLength);
-				body = read(bodyLengthInt);
+				bodyLengthInt = Integer.parseInt(bodyLength);
 			}
 		}
 	}
@@ -64,24 +64,36 @@ public class SCGIMessage {
 	
 	public void setHeaders(Map<String, String> headers) {
 		this.headers = headers;
-//		if (body != null) {
-//			headers.put(CONTENT_LENGTH, "" + body.length);
-//		}
 	}
 	
 	public void setBody(byte[] body) {
 		if (body != null) {
 			this.body = body;
-//			headers.put(CONTENT_LENGTH, "" + body.length);
 		}
 	}
 	
 	public byte[] getBody() {
-		return body;
+		byte[] ret = {};
+		
+		try {
+			ret = read(bodyLengthInt);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return ret;
+	}
+	
+	public InputStream getBodyStream() {
+		return socketIn;
 	}
 	
 	public boolean isBodyAvailable() {
-		return body != null && body.length > 0;
+		return bodyLengthInt > 0;
+	}
+	
+	public int getBodySize() {
+		return bodyLengthInt;
 	}
 	
 	public void serialize(OutputStream out) throws IOException {

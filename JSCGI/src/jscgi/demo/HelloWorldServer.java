@@ -8,12 +8,12 @@ public class HelloWorldServer {
 
 	private static final String RESPONSE_HEADER = "HTTP/1.1 200 OK\n";
 	private static final String CONTENT_TYPE = "Content-Type: %s\n";
-	private static final String CONTENT_LENGTH = "Content-Length: %d\n";
+	private static final String CONTENT_LENGTH = "Content-Length: %s\n";
 	private static final String FINISH_HEADER = "\n";
 
 	public static void main(String[] args) {
 		try {
-			new SCGIServer(65000, (req, res, mode) -> {
+			new SCGIServer(65001, (req, res, mode) -> {
 				try {
 					String message = "Hello, %s!";
 
