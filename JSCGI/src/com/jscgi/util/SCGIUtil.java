@@ -1,4 +1,4 @@
-package jscgi.util;
+package com.jscgi.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

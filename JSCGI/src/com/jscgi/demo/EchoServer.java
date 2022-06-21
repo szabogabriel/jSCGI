@@ -1,8 +1,8 @@
-package jscgi.demo;
+package com.jscgi.demo;
 
 import java.io.IOException;
 
-import jscgi.server.SCGIServer;
+import com.jscgi.server.SCGIServer;
 
 public class EchoServer {
 	

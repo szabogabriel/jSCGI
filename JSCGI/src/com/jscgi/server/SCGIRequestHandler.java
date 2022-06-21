@@ -1,9 +1,9 @@
-package jscgi.server;
+package com.jscgi.server;
 
 import java.io.OutputStream;
 
-import jscgi.Mode;
-import jscgi.SCGIMessage;
+import com.jscgi.Mode;
+import com.jscgi.SCGIMessage;
 
 public interface SCGIRequestHandler {
 

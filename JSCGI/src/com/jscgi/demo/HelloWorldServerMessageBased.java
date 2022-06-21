@@ -1,12 +1,12 @@
-package jscgi.demo;
+package com.jscgi.demo;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import jscgi.Mode;
-import jscgi.SCGIMessage;
-import jscgi.server.SCGIServer;
+import com.jscgi.Mode;
+import com.jscgi.SCGIMessage;
+import com.jscgi.server.SCGIServer;
 
 public class HelloWorldServerMessageBased {
 

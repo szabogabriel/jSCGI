@@ -10,6 +10,8 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import com.jscgi.util.SCGIUtil;
+
 public class ParseHeaderTest {
 	
 	@Test

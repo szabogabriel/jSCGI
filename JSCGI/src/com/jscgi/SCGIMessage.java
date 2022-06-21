@@ -1,4 +1,4 @@
-package jscgi;
+package com.jscgi;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import jscgi.util.SCGIUtil;
+import com.jscgi.util.SCGIUtil;
 
 public class SCGIMessage {
 	

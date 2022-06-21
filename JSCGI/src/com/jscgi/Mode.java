@@ -1,4 +1,4 @@
-package jscgi;
+package com.jscgi;
 
 public enum Mode {
 	
