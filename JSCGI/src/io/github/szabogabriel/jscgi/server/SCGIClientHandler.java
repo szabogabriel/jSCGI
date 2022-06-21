@@ -1,12 +1,12 @@
-package com.jscgi.server;
+package io.github.szabogabriel.jscgi.server;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
-import com.jscgi.Mode;
-import com.jscgi.SCGIMessage;
+import io.github.szabogabriel.jscgi.Mode;
+import io.github.szabogabriel.jscgi.SCGIMessage;
 
 public class SCGIClientHandler implements Runnable {
 

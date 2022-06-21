@@ -1,4 +1,4 @@
-package com.jscgi;
+package io.github.szabogabriel.jscgi;
 
 public enum Mode {
 	

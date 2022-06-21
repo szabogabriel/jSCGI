@@ -10,7 +10,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import com.jscgi.util.SCGIUtil;
+import io.github.szabogabriel.jscgi.util.SCGIUtil;
 
 public class ParseHeaderTest {
 	

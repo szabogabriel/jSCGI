@@ -1,4 +1,4 @@
-package com.jscgi.util;
+package io.github.szabogabriel.jscgi.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

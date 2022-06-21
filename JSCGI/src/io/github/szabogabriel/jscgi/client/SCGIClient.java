@@ -1,4 +1,4 @@
-package com.jscgi.client;
+package io.github.szabogabriel.jscgi.client;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -7,8 +7,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import com.jscgi.Mode;
-import com.jscgi.SCGIMessage;
+import io.github.szabogabriel.jscgi.Mode;
+import io.github.szabogabriel.jscgi.SCGIMessage;
 
 public class SCGIClient {
 	

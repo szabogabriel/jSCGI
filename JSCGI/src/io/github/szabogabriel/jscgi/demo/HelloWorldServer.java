@@ -1,8 +1,8 @@
-package com.jscgi.demo;
+package io.github.szabogabriel.jscgi.demo;
 
 import java.io.IOException;
 
-import com.jscgi.server.SCGIServer;
+import io.github.szabogabriel.jscgi.server.SCGIServer;
 
 public class HelloWorldServer {
 

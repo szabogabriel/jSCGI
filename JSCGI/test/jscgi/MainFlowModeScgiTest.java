@@ -8,10 +8,10 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-import com.jscgi.Mode;
-import com.jscgi.SCGIMessage;
-import com.jscgi.client.SCGIClient;
-import com.jscgi.server.SCGIServer;
+import io.github.szabogabriel.jscgi.Mode;
+import io.github.szabogabriel.jscgi.SCGIMessage;
+import io.github.szabogabriel.jscgi.client.SCGIClient;
+import io.github.szabogabriel.jscgi.server.SCGIServer;
 
 public class MainFlowModeScgiTest {
 	
