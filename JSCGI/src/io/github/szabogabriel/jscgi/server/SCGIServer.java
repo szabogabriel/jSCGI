@@ -22,11 +22,13 @@ public class SCGIServer {
 
 	private SCGIRequestHandler requestHandler;
 
-	private ExecutorService executor = Executors.newCachedThreadPool();
+	private ExecutorService executor;
 
 	private Thread t;
 
 	private Mode mode;
+	
+	private boolean async;
 
 	/**
 	 * Create a SCGIServer instance.
@@ -48,14 +50,43 @@ public class SCGIServer {
 	 * @throws IOException
 	 */
 	public SCGIServer(int port, SCGIRequestHandler requestHandler, Mode mode) throws IOException {
+		this(port, requestHandler, mode, false);
+	}
+	
+	public SCGIServer(int port, SCGIRequestHandler requestHandler, Mode mode, boolean async) throws IOException {
 		this.mode = mode;
 		this.requestHandler = requestHandler;
+		this.async = async;
 		ss = new ServerSocket(port);
-		t = new Thread(this::handleNewConnection);
+		t = new Thread(initAndCreateRunnable(mode));
 		t.start();
 	}
+	
+	private Runnable initAndCreateRunnable(Mode mode) {
+		if (isAsyncMode()) {
+			return this::handleNewAsyncConnection; 
+		} else { 
+			executor = Executors.newCachedThreadPool();
+			return this::handleNewSyncConnection;
+		}
+	}
+	
+	private boolean isAsyncMode() {
+		return async;
+	}
 
-	private void handleNewConnection() {
+	private void handleNewAsyncConnection() {
+		while (true) {
+			try {
+				Socket socket = ss.accept();
+				new AsyncSCGIClientHandler(socket, requestHandler, mode).run();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}	
+	}
+	
+	private void handleNewSyncConnection() {
 		while (true) {
 			try {
 				Socket socket = ss.accept();

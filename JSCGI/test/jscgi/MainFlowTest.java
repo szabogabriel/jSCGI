@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
+import io.github.szabogabriel.jscgi.Mode;
 import io.github.szabogabriel.jscgi.SCGIMessage;
 import io.github.szabogabriel.jscgi.client.SCGIClient;
 import io.github.szabogabriel.jscgi.server.SCGIServer;
@@ -27,7 +28,7 @@ public class MainFlowTest {
 						e.printStackTrace();
 					}
 				}
-		});
+		}, Mode.STANDARD, true);
 		
 		SCGIClient client = new SCGIClient("localhost", port);
 		String res = new String(client.sendAndReceiveAsByteArray(new SCGIMessage(new HashMap<>(), "world".getBytes())));
