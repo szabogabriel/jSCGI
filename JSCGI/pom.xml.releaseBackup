@@ -1,8 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>io.github.szabogabriel</groupId>
 	<artifactId>jscgi</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>JSCGI</name>
 
 	<distributionManagement>
@@ -20,7 +22,7 @@
 		<connection>scm:git:git://github.com/szabogabriel/jSCGI.git</connection>
 		<developerConnection>scm:git:git@github.com:szabogabriel/jSCGI.git</developerConnection>
 		<url>https://github.com/szabogabriel/jSCGI.git</url>
-		<tag>jscgi-0.0.1</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<dependencies>
